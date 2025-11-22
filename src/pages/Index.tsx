@@ -3,10 +3,12 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
+import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/sheet';
 import Icon from '@/components/ui/icon';
 
 const Index = () => {
   const [selectedRoute, setSelectedRoute] = useState<string | null>(null);
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   const popularRoutes = [
     { from: 'Москва', to: 'Санкт-Петербург', price: '2500₽', time: '4ч', color: 'bg-primary' },
@@ -60,7 +62,70 @@ const Index = () => {
             <a href="#faq" className="hover:text-primary transition-colors">FAQ</a>
             <a href="#contacts" className="hover:text-primary transition-colors">Контакты</a>
           </div>
-          <Button>Войти</Button>
+          <div className="hidden md:block">
+            <Button>Войти</Button>
+          </div>
+          <Sheet open={mobileMenuOpen} onOpenChange={setMobileMenuOpen}>
+            <SheetTrigger asChild className="md:hidden">
+              <Button variant="ghost" size="icon">
+                <Icon name="Menu" size={28} />
+              </Button>
+            </SheetTrigger>
+            <SheetContent side="right" className="w-[300px] sm:w-[400px]">
+              <div className="flex flex-col gap-6 mt-8">
+                <a 
+                  href="#search" 
+                  className="text-lg hover:text-primary transition-colors"
+                  onClick={() => setMobileMenuOpen(false)}
+                >
+                  Поиск
+                </a>
+                <a 
+                  href="#routes" 
+                  className="text-lg hover:text-primary transition-colors"
+                  onClick={() => setMobileMenuOpen(false)}
+                >
+                  Маршруты
+                </a>
+                <a 
+                  href="#benefits" 
+                  className="text-lg hover:text-primary transition-colors"
+                  onClick={() => setMobileMenuOpen(false)}
+                >
+                  Преимущества
+                </a>
+                <a 
+                  href="#tariffs" 
+                  className="text-lg hover:text-primary transition-colors"
+                  onClick={() => setMobileMenuOpen(false)}
+                >
+                  Тарифы
+                </a>
+                <a 
+                  href="#reviews" 
+                  className="text-lg hover:text-primary transition-colors"
+                  onClick={() => setMobileMenuOpen(false)}
+                >
+                  Отзывы
+                </a>
+                <a 
+                  href="#faq" 
+                  className="text-lg hover:text-primary transition-colors"
+                  onClick={() => setMobileMenuOpen(false)}
+                >
+                  FAQ
+                </a>
+                <a 
+                  href="#contacts" 
+                  className="text-lg hover:text-primary transition-colors"
+                  onClick={() => setMobileMenuOpen(false)}
+                >
+                  Контакты
+                </a>
+                <Button className="mt-4" onClick={() => setMobileMenuOpen(false)}>Войти</Button>
+              </div>
+            </SheetContent>
+          </Sheet>
         </nav>
       </header>
 
