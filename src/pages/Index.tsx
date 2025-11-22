@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
@@ -9,6 +9,26 @@ import Icon from '@/components/ui/icon';
 const Index = () => {
   const [selectedRoute, setSelectedRoute] = useState<string | null>(null);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('animate-fade-in-up');
+          }
+        });
+      },
+      { threshold: 0.1 }
+    );
+
+    const elements = document.querySelectorAll('.scroll-animate');
+    elements.forEach((el) => observer.observe(el));
+
+    return () => {
+      elements.forEach((el) => observer.unobserve(el));
+    };
+  }, []);
 
   const popularRoutes = [
     { from: 'Москва', to: 'Санкт-Петербург', price: '2500₽', time: '4ч', color: 'bg-primary' },
@@ -191,7 +211,7 @@ const Index = () => {
 
       <section id="routes" className="py-16 bg-muted/30">
         <div className="container mx-auto px-4">
-          <div className="text-center mb-12 animate-fade-in">
+          <div className="text-center mb-12 scroll-animate opacity-0">
             <h2 className="text-4xl font-bold mb-4">Популярные маршруты</h2>
             <p className="text-xl text-muted-foreground">Интерактивная карта направлений</p>
           </div>
@@ -290,7 +310,7 @@ const Index = () => {
 
       <section id="benefits" className="py-16">
         <div className="container mx-auto px-4">
-          <div className="text-center mb-12 animate-fade-in">
+          <div className="text-center mb-12 scroll-animate opacity-0">
             <h2 className="text-4xl font-bold mb-4">Наши преимущества</h2>
             <p className="text-xl text-muted-foreground">Почему выбирают нас</p>
           </div>
@@ -314,7 +334,7 @@ const Index = () => {
 
       <section id="tariffs" className="py-16 bg-muted/30">
         <div className="container mx-auto px-4">
-          <div className="text-center mb-12 animate-fade-in">
+          <div className="text-center mb-12 scroll-animate opacity-0">
             <h2 className="text-4xl font-bold mb-4">Тарифы и классы обслуживания</h2>
             <p className="text-xl text-muted-foreground">Выберите подходящий уровень комфорта</p>
           </div>
@@ -351,7 +371,7 @@ const Index = () => {
 
       <section id="reviews" className="py-16">
         <div className="container mx-auto px-4">
-          <div className="text-center mb-12 animate-fade-in">
+          <div className="text-center mb-12 scroll-animate opacity-0">
             <h2 className="text-4xl font-bold mb-4">Отзывы клиентов</h2>
             <p className="text-xl text-muted-foreground">Что говорят о нас</p>
           </div>
@@ -377,7 +397,7 @@ const Index = () => {
 
       <section id="faq" className="py-16 bg-muted/30">
         <div className="container mx-auto px-4 max-w-3xl">
-          <div className="text-center mb-12 animate-fade-in">
+          <div className="text-center mb-12 scroll-animate opacity-0">
             <h2 className="text-4xl font-bold mb-4">Часто задаваемые вопросы</h2>
             <p className="text-xl text-muted-foreground">Ответы на популярные вопросы</p>
           </div>
@@ -398,7 +418,7 @@ const Index = () => {
 
       <section id="contacts" className="py-16">
         <div className="container mx-auto px-4">
-          <div className="text-center mb-12 animate-fade-in">
+          <div className="text-center mb-12 scroll-animate opacity-0">
             <h2 className="text-4xl font-bold mb-4">Контакты</h2>
             <p className="text-xl text-muted-foreground">Свяжитесь с нами</p>
           </div>
