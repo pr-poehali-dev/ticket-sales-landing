@@ -9,6 +9,7 @@ import Icon from '@/components/ui/icon';
 const Index = () => {
   const [selectedRoute, setSelectedRoute] = useState<string | null>(null);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [showScrollTop, setShowScrollTop] = useState(false);
 
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -29,6 +30,19 @@ const Index = () => {
       elements.forEach((el) => observer.unobserve(el));
     };
   }, []);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      setShowScrollTop(window.scrollY > 500);
+    };
+
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+
+  const scrollToTop = () => {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
 
   const popularRoutes = [
     { from: 'Москва', to: 'Санкт-Петербург', price: '2500₽', time: '4ч', color: 'bg-primary' },
@@ -462,6 +476,16 @@ const Index = () => {
           </div>
         </div>
       </section>
+
+      {showScrollTop && (
+        <button
+          onClick={scrollToTop}
+          className="fixed bottom-8 right-8 z-50 w-12 h-12 bg-primary text-white rounded-full shadow-lg hover:bg-primary/90 transition-all hover:scale-110 flex items-center justify-center animate-fade-in"
+          aria-label="Наверх"
+        >
+          <Icon name="ArrowUp" size={24} />
+        </button>
+      )}
 
       <footer className="bg-foreground text-background py-12">
         <div className="container mx-auto px-4">
